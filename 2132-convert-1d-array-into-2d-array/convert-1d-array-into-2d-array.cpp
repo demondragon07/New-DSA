@@ -12,13 +12,11 @@ public:
             return khali;
           }
 
-        for(int i=0;i<m;i++){
-            for(int j=0;j<n;j++){
-                if(k!=original.size())
-                ans[i][j]=original[k];
-                k++;
-            }
-        }
+       for(int i=0;i<original.size();i++){
+        int k=i/n;
+        int j=i%n;
+        ans[k][j]=original[i];
+       }
         return ans;
     }
 };
