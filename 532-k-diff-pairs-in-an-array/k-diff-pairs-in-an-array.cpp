@@ -1,44 +1,29 @@
 class Solution {
 public:
+     void search(vector<int>&nums,int firstelement,int j, int target,set<pair<int,int>>&ans){
+        int s=j;
+        int e=nums.size()-1;
+        while(s<=e){
+        int mid=s+(e-s)/2;
+        if(nums[mid]==target){
+            ans.insert({firstelement,nums[mid]});
+            return;
+        } 
+        else if(nums[mid]>target)
+           e=mid-1;
+        else
+          s=mid+1;
+       }
+     } 
+    
     int findPairs(vector<int>& nums, int k) {
         sort(nums.begin(),nums.end());
-        int i=0;
         int n=nums.size();
-        int j=1;
-        int ans=0;
-        unordered_map<int,int>mp;
-        for(auto x:nums){
-            mp[x]++;
+        set<pair<int,int>>ans;
+        for(int i=0;i<n;i++){
+           int  target=nums[i]+k;
+        search(nums,nums[i],i+1,target,ans);
         }
-        set<int>s;
-        for(auto x:nums){
-            s.insert(x);
-        }
-        vector<int>newnums;
-        for(auto x:s){
-            newnums.push_back(x);
-        }
-      
-        if(k==0){
-          for(auto x:newnums){
-            if(mp[x]>1) ans++;
-          }
-          return ans;
-        }
-        int m=newnums.size();
-        while(j<m){
-            int diff=abs(newnums[j]-newnums[i]);
-            if(diff==k){
-                ans++;
-                i++;
-                j++;
-            }
-            else if(diff>k){
-                i++;
-            }else{
-                j++;
-            }
-        }
-        return ans;
+       return ans.size(); 
     }
 };
