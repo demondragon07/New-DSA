@@ -1,24 +1,18 @@
 class Solution {
 public:
-    static int x_global;
-    static bool mysort(int a ,int b){
-    if(abs(a-x_global)==abs(b-x_global))
-    return a<b;
-    return abs(a-x_global)<abs(b-x_global);
-   }
-
     vector<int> findClosestElements(vector<int>& arr, int k, int x) {
         int n=arr.size();
-         vector<int>ans;
-        x_global=x;
-      sort(arr.begin(),arr.end(),mysort);
+        int i=0;
+        int j=n-1;
+        while(j-i>=k){
+            if(abs(arr[i]-x)<=abs(arr[j]-x)){
+                j--;
+            }else{
+                i++;
+            }
+        }
 
-    for(int i=0;i<k;i++){
-       ans.push_back(arr[i]);
+        return vector<int>(arr.begin()+i,arr.begin()+j+1);
+
     }
-
-    sort(ans.begin(),ans.end());
-    return ans;
-    } 
 };
- int Solution::x_global=0;
