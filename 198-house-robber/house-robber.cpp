@@ -1,7 +1,6 @@
 class Solution {
 public:
     int rob(vector<int>& nums){
-     vector<int>t(101,0);
        int n=nums.size();
      //t[i]=Max profit till ith house;
        int prevkaprev=0;
