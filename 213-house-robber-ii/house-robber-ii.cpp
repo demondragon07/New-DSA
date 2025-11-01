@@ -1,21 +1,31 @@
 class Solution {
 public:
-    int solve(vector<int>&nums,int i,int n,vector<int>&dp){
-       if(i>n) return 0;
-       if(dp[i]!=-1) return dp[i];
-       int steal=nums[i]+solve(nums,i+2,n,dp);
-       int skip=solve(nums,i+1,n,dp);
-       return dp[i]=max(steal,skip);
-    }
-   
-    int rob(vector<int>& nums) {
+    int rob(vector<int>& nums){
         int n=nums.size();
-        if(n==1)return nums[0];
-        if(n==2) return max(nums[0],nums[1]);
-        vector<int>dp1(n+1,-1);
-       int take0thindexwala_1sthouse=nums[0]+solve(nums,2,n-2,dp1);
-       vector<int>dp2(n+1,-1);
-       int nottake0thindexwala_1sthouse=solve(nums,1,n-1,dp2);
-       return max(take0thindexwala_1sthouse,nottake0thindexwala_1sthouse);
+        vector<int>dp(101,0);
+        if(n==0) return 0;
+        if(n==1) return nums[0];
+        dp[0]=0;
+        // if 1st house is taken;
+        //dp[i] represents max profit till ith house
+        for(int i=1;i<=n-1;i++){
+            int steal=nums[i-1]+ ((i-2>=0)?dp[i-2]:0);
+            int skip=dp[i-1];
+            dp[i]=max(steal,skip);
+        }
+       int result1=dp[n-1];
+
+       dp.clear();
+       // if 1st house is not taken
+       //dp[i] represent the max profit till ith house
+       dp[0]=0;
+       dp[1]=0;
+       for(int i=2;i<=n;i++){
+          int steal=nums[i-1]+((i-2>=0)?dp[i-2]:0);
+          int skip=dp[i-1];
+          dp[i]=max(steal,skip);
+       }
+       int result2=dp[n];
+       return max(result1,result2);
     }
 };
