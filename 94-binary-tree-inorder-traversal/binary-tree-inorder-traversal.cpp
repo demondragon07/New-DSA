@@ -11,18 +11,30 @@
  */
 class Solution {
 public:
-  vector<int>solve(TreeNode*root,vector<int>&ans){
-       if(root==NULL){
-        return {};
-       }
-       solve(root->left,ans);
-       ans.push_back(root->val);
-       solve(root->right,ans);
-       return ans;
-  }
-
     vector<int> inorderTraversal(TreeNode* root) {
-        vector<int>ans;
-        return solve(root ,ans);
+        vector<int>inorder;
+        if(!root)return {};
+        TreeNode* curr=root;
+        while(curr){
+            if(!curr->left){
+                inorder.push_back(curr->val);
+                curr=curr->right;
+            }else{
+                TreeNode*prev=curr->left;
+                while(prev->right && prev->right!=curr){
+                    prev=prev->right;
+                }
+                if(!prev->right){
+                    prev->right=curr;
+                    curr=curr->left;
+                }
+                else{
+                    prev->right=NULL;
+                    inorder.push_back(curr->val);
+                    curr=curr->right;
+                }
+            }
+        }
+      return inorder;
     }
 };
