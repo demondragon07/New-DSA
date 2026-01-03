@@ -1,28 +1,25 @@
 class Solution {
 public:
-
-    static bool mycmp(pair<char,int>&a, pair<char,int>&b){
-           return a.second>b.second;
-     }
-
+ static bool mycmp(pair<char,int>&a, pair<char,int>&b){
+    return a.second>b.second;
+ }
     string frequencySort(string s) {
+        vector<pair<char,int>>v(123);
         int n=s.length();
-        unordered_map<char,int>mp;
-        for(int i=0;i<n;i++){ 
-            mp[s[i]]++;
-        }
-        vector<pair<char,int>>v;
-        for(auto x:mp){
-          v.push_back(x);
-        }
+        for(int i=0;i<n;i++){
+            v[s[i]].first=s[i];
+            v[s[i]].second++;
+        } 
         sort(v.begin(),v.end(),mycmp);
-        string ans="";
-       for(auto x:v){
-        while(x.second){
-          ans+=x.first;
-          x.second--;
-         }
-       }
-       return ans;
+        string result="";
+        for(int i=0;i<122;i++){
+            if(v[i].second>0){
+                char ch=v[i].first;
+                int freq=v[i].second;
+                string temp=string(freq,ch);
+                result+=temp;
+            }
+        }
+        return result;
     }
 };
