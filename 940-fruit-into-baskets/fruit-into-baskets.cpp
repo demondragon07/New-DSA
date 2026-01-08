@@ -8,19 +8,18 @@ public:
         int ans=0;
         unordered_map<int,int>mp;
         while(r<n){
-            mp[fruits[r]]++;
-            if(mp.size()<=2){
-                len=r-l+1;
-               ans=max(ans,len);
-            }else{
-                while(mp.size()>2){
-                    mp[fruits[l]]--;
-                    if(mp[fruits[l]]==0)mp.erase(fruits[l]);
-                    l++;
-                }
-            }
-        r++;
-        }
-        return ans;
+          mp[fruits[r]]++;
+          if(mp.size()<=2){
+            len=r-l+1;
+            ans=max(ans,len);
+          }
+          if(mp.size()>2){
+            mp[fruits[l]]--;
+            if(mp[fruits[l]]==0)mp.erase(fruits[l]);
+            l++;
+          }
+          r++;
+       }
+       return ans;
     }
 };
