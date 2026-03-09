@@ -9,41 +9,19 @@
  * };
  */
 class Solution {
-public: 
-    ListNode*oddlength(ListNode*head){
-        ListNode*curr=head;
-        if(curr==NULL || curr->next==NULL)return curr;
-        ListNode*prev=curr->next;
-        while(curr->next!=NULL){
-            ListNode*forward=curr->next;
-            curr->next=forward->next;
-            curr=forward;
-        }
-        curr->next=prev;
-        return head;
-    }
-
-    ListNode*evenlength(ListNode*head){
-        ListNode*curr=head;
-        if(curr==NULL || curr->next==NULL)return curr;
-        ListNode*prev=curr->next;
-        while(curr->next->next!=NULL){
-            ListNode*forward=curr->next;
-            curr->next=forward->next;
-            curr=forward;
-        }
-        curr->next=prev;
-        return head;
-    }
-
+public:
     ListNode* oddEvenList(ListNode* head) {
-        int len=0;
-        ListNode*temp=head;
-        while(temp!=NULL){
-            len++;
-            temp=temp->next;
+        ListNode*odd=head;
+        if(head==NULL|| head->next==NULL)return head;
+        ListNode*even=head->next;
+        ListNode*evenhead=even;
+        while(even!=NULL && even->next!=NULL){
+            odd->next=odd->next->next;
+            even->next=even->next->next;
+            odd=odd->next;
+            even=even->next;
         }
-     if(len%2==0) return evenlength(head);
-     return oddlength(head);
+        odd->next=evenhead;
+        return head;
     }
 };
