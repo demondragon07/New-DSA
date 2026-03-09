@@ -10,22 +10,37 @@
  */
 class Solution {
 public:
+   ListNode* findmiddle(ListNode*head){
+      ListNode*slow=head;
+      ListNode*fast=head;
+      while(fast->next!=NULL && fast->next->next!=NULL){
+        slow=slow->next;
+        fast=fast->next->next;
+      }
+      return slow;
+   }
 
-    bool checkpalindrome(vector<int>&v){
-        int i=0;
-        int j=v.size()-1;
-        while(i<j){
-            if(v[i++]!=v[j--])return false;
-        }
-        return true;
-    }
+   ListNode*reverselist(ListNode*head){
+       ListNode*curr=head;
+       ListNode*prev=NULL;
+       while(curr!=NULL){
+        ListNode*forward=curr->next;
+        curr->next=prev;
+        prev=curr;
+        curr=forward;
+       }
+     return prev;
+   }
+  
     bool isPalindrome(ListNode* head) {
-        vector<int>v;
-        ListNode*temp=head;
-        while(temp!=NULL){
-            v.push_back(temp->val);
-            temp=temp->next;
-        }
-        return checkpalindrome(v);
+       ListNode*middle=findmiddle(head);
+       ListNode*second=reverselist(middle->next);
+       ListNode*first=head;
+       while(second!=NULL){
+         if(first->val!=second->val) return false;
+         first=first->next;
+         second=second->next;
+       }
+     return true;
     }
 };
