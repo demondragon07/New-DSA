@@ -10,30 +10,38 @@
  */
 class Solution {
 public:
-
-  static bool cmp(ListNode*&a,ListNode*&b){
-       return a->val<b->val;
+  ListNode*findmiddle(ListNode*head){
+    ListNode*slow=head;
+    ListNode*fast=head->next;
+    while(fast!=NULL && fast->next!=NULL){
+        fast=fast->next->next;
+        slow=slow->next;
+    }
+    return slow;
+  }
+   
+   ListNode*mergetwosortedlists(ListNode*L1,ListNode*L2){
+     if(L1==NULL) return L2;
+     if(L2==NULL) return L1;
+     ListNode*result=NULL;
+     if(L1->val<=L2->val){
+        result=L1;
+        result->next=mergetwosortedlists(L1->next,L2);
+     }else{
+        result=L2;
+        result->next=mergetwosortedlists(L1,L2->next);
      }
-
-  ListNode* sortList(ListNode* head) {
-        vector<ListNode*>v;
-        ListNode*temp=head;
+     return result;
+   }
+  
+    ListNode* sortList(ListNode* head) {
         if(head==NULL || head->next==NULL)return head;
-        while(temp!=NULL){
-            v.push_back(temp);
-            temp=temp->next;
-        }
-        sort(v.begin(),v.end(),cmp);
-        temp=v[0];
-        ListNode*temp1=temp;
-        int n=v.size();
-        int cnt=1;
-        while(cnt<n){
-            temp->next=v[cnt];
-            cnt++;
-            temp=temp->next;
-        }
-        temp->next=NULL;
-        return temp1;
+         ListNode*middle=findmiddle(head);
+         ListNode*right=middle->next;
+         middle->next=NULL;
+         ListNode*left=head;
+         ListNode*L1=sortList(left);
+         ListNode*L2=sortList(right);
+         return mergetwosortedlists(L1,L2);
     }
 };
