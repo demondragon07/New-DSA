@@ -1,7 +1,10 @@
 class Solution {
 public:
     void findcombination(vector<vector<int>>&ans, vector<int>&ds, int idx, int target,vector<int>arr){
-        if(target==0)ans.push_back(ds);
+        if(target==0){
+            ans.push_back(ds);
+            return;
+            }
         for(int i=idx;i<arr.size();i++){
             if(i>idx && arr[i]==arr[i-1])continue;
             if(arr[i]>target) return;
