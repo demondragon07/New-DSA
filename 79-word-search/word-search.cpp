@@ -2,7 +2,7 @@ class Solution {
 public:
 int m , n;
     vector<vector<int>>directions={{1,0},{-1,0},{0,1},{0,-1}};
-    bool find(vector<vector<char>>&board ,string &word ,int idx ,int i , int j){
+    bool find(vector<vector<char>>&board ,string word ,int idx ,int i , int j){
         if(idx==word.size())return true;
         if(i<0 || j<0 || i>=m || j>=n || board[i][j]=='$') return false;
         if(board[i][j]!=word[idx]) return false;
