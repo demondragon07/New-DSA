@@ -1,30 +1,25 @@
 class Solution {
 public:
     int divide(int dividend, int divisor) {
-        if(dividend==INT_MIN && divisor==-1)return INT_MAX;
-        bool ispositive=true;
-        if(divisor<0 && dividend>0)
-        {
-             ispositive=false;
-        }
-        else if(divisor>0 && dividend<0){
-            ispositive=false;
-        }
-        long long int divisorx=abs((long long)divisor);
-        long long int dividendx=abs((long long)dividend);
-        long long s=0;
-        long long e=dividendx;
-        long long ans=0;
-        while(s<=e){
-            long long mid=s+((e-s)>>1);
-            if(divisorx*mid>dividendx){
-                e=mid-1;
-            }else {
-                ans=mid;
-                s=mid+1;
-            }
-        }
-       if(ispositive) return (int)ans;
-       return (int)-ans;
+        bool ispos=true;
+        if(dividend==divisor)return 1;
+        if(dividend<0 && divisor>0) ispos=false;
+        if(dividend>0 && divisor<0) ispos=false;
+         
+         long long divi=llabs(dividend);
+         long long ds=llabs(divisor);
+         long long ans=0;    
+         while(divi>=ds){
+             int cnt=0;
+             while(divi>=ds<<(cnt+1)){
+                cnt++;
+             }
+             ans+=(1LL<<cnt);
+             divi=divi-(ds<<cnt);
+         }
+        if(ans>=INT_MAX && ispos) return INT_MAX;
+        if(ans>INT_MAX && !ispos) return INT_MIN;
+       
+        return ispos?ans:-ans; 
     }
 };
