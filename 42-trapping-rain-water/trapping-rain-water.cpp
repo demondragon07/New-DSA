@@ -1,25 +1,23 @@
 class Solution {
 public:
-    int trap(vector<int>& height) {
-        int n=height.size();
-        vector<int>premax(n);
-        vector<int>suffmax(n);
-        
-        premax[0]=height[0];
-        for(int i=1;i<n;i++){
-            premax[i]=max(premax[i-1],height[i]);
-        }
-
-        suffmax[n-1]=height[n-1];
-        for(int i=n-2;i>=0;i--){
-            suffmax[i]=max(suffmax[i+1],height[i]);
-        }
-        
+    int trap(vector<int>& arr) {
+        int n=arr.size();
+        int l=0,r=n-1;
+        int lmax=0;
+        int rmax=0;
         int total=0;
-        for(int i=0;i<n;i++){
-           total+=(min(premax[i],suffmax[i])-height[i]);
+
+        while(l<r){
+            if(arr[l]<=arr[r]){
+                if(lmax>arr[l]) total+=lmax-arr[l];
+                else lmax=arr[l];
+                l++;
+            }else{
+                if(rmax>arr[r]) total+=rmax-arr[r];
+                else rmax=arr[r];
+                r--;
+            }
         }
-        
-        return total;
+        return total; 
     }
 };
